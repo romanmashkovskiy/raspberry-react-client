@@ -32,9 +32,6 @@ const ConfirmEmail = ({ confirmEmail, sendConfirmEmailCode }) => {
     );
 };
 
-const mapDispatchToProps = {
-    confirmEmail,
-    sendConfirmEmailCode
-};
+const mapDispatchToProps = { confirmEmail, sendConfirmEmailCode };
 
 export default connect(null, mapDispatchToProps)(ConfirmEmail);

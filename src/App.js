@@ -33,12 +33,8 @@ const App = ({ user, fetchAuthUser }) => {
     );
 };
 
-const mapStateToProps = ({ auth: { user } }) => ({
-    user
-});
+const mapStateToProps = ({ auth: { user } }) => ({ user });
 
-const mapDispatchToProps = {
-    fetchAuthUser
-};
+const mapDispatchToProps = { fetchAuthUser };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

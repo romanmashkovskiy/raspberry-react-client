@@ -37,8 +37,6 @@ const ResetPassword = ({ history, resetPassword }) => {
     );
 };
 
-const mapDispatchToProps = {
-    resetPassword
-};
+const mapDispatchToProps = { resetPassword };
 
 export default connect(null, mapDispatchToProps)(ResetPassword);
