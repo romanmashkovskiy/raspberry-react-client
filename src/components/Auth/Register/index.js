@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import RegisterForm from './form/index';
 import { register } from '../../../store/auth/actions';
+import { useAuthed } from '../../../Hooks';
 
-const Register = ({ register }) => {
+const Register = ({ user, register, history }) => {
     const [setSubmittingForm, handleSetSubmitting] = useState(null);
+
+    const isAuthenticated = useAuthed(user);
+
+    useAuthed(user, history);
 
     useEffect(() => {
         if (setSubmittingForm) {
@@ -24,6 +30,10 @@ const Register = ({ register }) => {
         register(data);
     };
 
+    if (isAuthenticated) {
+        return <Redirect to={ '/auth/email-confirm' }/>
+    }
+
     return (
         <RegisterForm
             initialValues={ { userName: '', email: '', password: '', confirmPassword: '' } }
@@ -32,9 +42,9 @@ const Register = ({ register }) => {
     );
 };
 
-const mapDispatchToProps = {
-    register
-};
+const mapStateToProps = ({ auth: { user } }) => ({ user });
 
-export default connect(null, mapDispatchToProps)(Register);
+const mapDispatchToProps = { register };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
 

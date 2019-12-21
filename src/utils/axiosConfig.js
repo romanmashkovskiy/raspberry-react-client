@@ -1,5 +1,6 @@
 import axios from 'axios';
 import toast from './toast';
+import { logout } from '../store/auth/actions';
 
 export const axiosClient = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
@@ -22,7 +23,7 @@ export const setupAxiosInterceptors = store => {
     axiosClient.interceptors.response.use(response => response, err => {
         if (err.response.status === 401) {
             toast.error('Session expired');
-            // store.dispatch(logoutOnExpired());
+            store.dispatch(logout());
         }
 
         return Promise.reject(err);

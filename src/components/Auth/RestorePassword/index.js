@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import RestorePasswordForm from './form';
 import { restorePassword } from '../../../store/auth/actions';
 
-const RestorePassword = () => {
+const RestorePassword = ({ restorePassword }) => {
     const [setSubmittingForm, handleSetSubmitting] = useState(null);
 
     useEffect(() => {
@@ -32,9 +32,7 @@ const RestorePassword = () => {
     );
 };
 
-const mapDispatchToProps = {
-    restorePassword
-};
+const mapDispatchToProps = { restorePassword };
 
 export default connect(null, mapDispatchToProps)(RestorePassword);
 

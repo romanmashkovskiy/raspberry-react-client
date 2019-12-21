@@ -9,11 +9,7 @@ import RestorePassword from './RestorePassword';
 
 const Auth = ({ match, user }) => {
     if (user && user.isConfirmed) {
-        return <Redirect to='/'/>
-    }
-
-    if (user && !user.isConfirmed) {
-        return <Redirect to={ `${match.path}/email-confirm` }/>
+        return <Redirect to='/dashboard'/>
     }
 
     return (

@@ -7,7 +7,7 @@ export const RESTORE_PASSWORD_REQUEST = 'RESTORE_PASSWORD_REQUEST';
 export const RESET_PASSWORD_REQUEST = 'RESET_PASSWORD_REQUEST';
 export const SEND_CONFIRM_EMAIL_CODE_REQUEST = 'SEND_CONFIRM_EMAIL_CODE_REQUEST';
 
-export const login  = (data) => ({
+export const login = (data) => ({
     type: LOGIN_REQUEST,
     request: {
         url: 'auth/login',
@@ -16,7 +16,7 @@ export const login  = (data) => ({
     },
 });
 
-export const register  = (data) => ({
+export const register = (data) => ({
     type: REGISTER_REQUEST,
     request: {
         url: 'auth/register',
@@ -25,11 +25,11 @@ export const register  = (data) => ({
     },
 });
 
-export const logout  = () => ({
+export const logout = () => ({
     type: LOGOUT,
 });
 
-export const fetchAuthUser =() => ({
+export const fetchAuthUser = () => ({
     type: FETCH_USER_REQUEST,
     request: {
         url: 'auth/me',
@@ -37,7 +37,7 @@ export const fetchAuthUser =() => ({
     },
 });
 
-export const confirmEmail  = (data) => ({
+export const confirmEmail = (data) => ({
     type: CONFIRM_EMAIL_REQUEST,
     request: {
         url: 'auth/email-confirm',
@@ -46,7 +46,7 @@ export const confirmEmail  = (data) => ({
     },
 });
 
-export const restorePassword  = (data) => ({
+export const restorePassword = (data) => ({
     type: RESTORE_PASSWORD_REQUEST,
     request: {
         url: 'auth/password-restore',
@@ -55,7 +55,7 @@ export const restorePassword  = (data) => ({
     },
 });
 
-export const resetPassword  = (data) => ({
+export const resetPassword = (data) => ({
     type: RESET_PASSWORD_REQUEST,
     request: {
         url: 'auth/password-reset',
@@ -64,14 +64,13 @@ export const resetPassword  = (data) => ({
     },
 });
 
-export const sendConfirmEmailCode  = () => ({
+export const sendConfirmEmailCode = () => ({
     type: SEND_CONFIRM_EMAIL_CODE_REQUEST,
     request: {
         url: 'auth/send-confirm-code',
         method: 'post',
     },
 });
-
 
 
 
