@@ -6,6 +6,7 @@ import Register from './Register';
 import ConfirmEmail from './ConfirmEmail';
 import ResetPassword from './ResetPassword';
 import RestorePassword from './RestorePassword';
+import NotFound from '../NotFound';
 
 const Auth = ({ match, user }) => {
     if (user && user.isConfirmed) {
@@ -19,6 +20,7 @@ const Auth = ({ match, user }) => {
             <Route path={ `${match.path}/email-confirm` } component={ ConfirmEmail }/>
             <Route path={ `${match.path}/password-reset` } component={ ResetPassword }/>
             <Route path={ `${match.path}/password-restore` } component={ RestorePassword }/>
+            <Route component={ NotFound } />
         </Switch>
     )
 };
