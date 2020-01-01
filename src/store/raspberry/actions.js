@@ -4,7 +4,7 @@ export const CLEAR_REQUEST = 'CLEAR_REQUEST';
 export const blink = () => ({
     type: BLINK_REQUEST,
     request: {
-        url: 'blink',
+        url: 'toggle-led',
         method: 'post',
     },
 });
