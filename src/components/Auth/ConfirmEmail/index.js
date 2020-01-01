@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import ConfirmEmailForm from './form/index';
 import { confirmEmail, sendConfirmEmailCode } from '../../../store/auth/actions';
 
-
-const ConfirmEmail = ({ confirmEmail, sendConfirmEmailCode }) => {
+const ConfirmEmail = ({ user, confirmEmail, sendConfirmEmailCode }) => {
     const [setSubmittingForm, handleSetSubmitting] = useState(null);
 
     useEffect(() => {
@@ -23,6 +23,10 @@ const ConfirmEmail = ({ confirmEmail, sendConfirmEmailCode }) => {
         confirmEmail(data);
     };
 
+    if (!user) {
+        return <Redirect to={ '/' }/>
+    }
+
     return (
         <ConfirmEmailForm
             values={ { code: '' } }
@@ -32,6 +36,8 @@ const ConfirmEmail = ({ confirmEmail, sendConfirmEmailCode }) => {
     );
 };
 
+const mapStateToProps = ({ auth: { user } }) => ({ user });
+
 const mapDispatchToProps = { confirmEmail, sendConfirmEmailCode };
 
-export default connect(null, mapDispatchToProps)(ConfirmEmail);
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmEmail);
