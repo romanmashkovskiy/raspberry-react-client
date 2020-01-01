@@ -1,10 +1,15 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import { connect } from 'react-redux';
+import { blink } from '../../store/raspberry/actions';
 
-const HomePage = () => (
-    <Typography variant="h1" component="h2">
-        Dashboard
-    </Typography>
-);
+const Dashboard = ({ blink }) => {
+    return (
+        <button onClick={ blink }>
+            click
+        </button>
+    );
+};
 
-export default HomePage;
+const mapDispatchToProps = { blink };
+
+export default connect(null, mapDispatchToProps)(Dashboard);
