@@ -5,14 +5,11 @@ import { blink, clear } from '../../store/raspberry/actions';
 const Dashboard = ({ blink, clear }) => {
     return (
         <>
-            <button onClick={ blink }>
-                toggle led
-            </button>
+            <h1>Control LED light</h1>
+            <p><input type='checkbox'/></p>
             <button onClick={ clear }>
                 clear led
             </button>
-            <h1>Control LED light</h1>
-            <p><input type="checkbox" id="light"/></p>
         </>
     );
 };

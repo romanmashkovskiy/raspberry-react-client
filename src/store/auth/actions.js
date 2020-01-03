@@ -1,3 +1,5 @@
+import { socketDisconnect } from '../raspberry/actions';
+
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const LOGOUT = 'LOGOUT';
@@ -25,9 +27,11 @@ export const register = (data) => ({
     },
 });
 
-export const logout = () => ({
-    type: LOGOUT,
-});
+export const logout = () => (dispatch) => {
+    localStorage.removeItem('authToken');
+    dispatch(socketDisconnect());
+    dispatch({ type: LOGOUT });
+};
 
 export const fetchAuthUser = () => ({
     type: FETCH_USER_REQUEST,

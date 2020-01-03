@@ -11,7 +11,6 @@ import {
 } from './actions';
 import { STATE_STATUSES } from '../../utils/stateStatuses';
 import { toast } from '../../utils';
-import { socketClient } from '../../index';
 
 const initialState = {
     user: null,
@@ -90,9 +89,6 @@ export default (state = initialState, action) => {
             return errorReducer(action, state);
         }
         case LOGOUT: {
-            localStorage.removeItem('authToken');
-            socketClient.disconnect();
-
             return {
                 ...initialState
             };

@@ -16,7 +16,7 @@ setupAxiosInterceptors(store);
 
 ReactDOM.render(
     <Provider store={ store }>
-        <App socketClient={ socketClient }/>
+        <App/>
         <ToastStyles>
             <ToastContainer
                 position='top-right'

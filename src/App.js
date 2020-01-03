@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { PrivateRoute, toast } from './utils';
-import { fetchAuthUser, logout } from './store/auth/actions';
+import { PrivateRoute } from './utils';
+import { fetchAuthUser } from './store/auth/actions';
+import { socketConnect, socketDisconnect } from './store/raspberry/actions';
 
 import Header from './components/Header';
 import HomePage from './components/HomePage'
@@ -12,7 +13,7 @@ import NotFound from './components/NotFound';
 
 import { Container } from './UI';
 
-const App = ({ user, fetchAuthUser, socketClient }) => {
+const App = ({ user, fetchAuthUser, socketConnect, socketDisconnect }) => {
     useEffect(() => {
         const token = localStorage.getItem('authToken');
 
@@ -22,8 +23,10 @@ const App = ({ user, fetchAuthUser, socketClient }) => {
     }, []);
 
     useEffect(() => {
-        if (user) {
-            socketClient.connect();
+        const token = localStorage.getItem('authToken');
+
+        if (user && token) {
+            socketConnect();
         }
     }, [user]);
 
@@ -44,6 +47,6 @@ const App = ({ user, fetchAuthUser, socketClient }) => {
 
 const mapStateToProps = ({ auth: { user } }) => ({ user });
 
-const mapDispatchToProps = { fetchAuthUser, logout };
+const mapDispatchToProps = { fetchAuthUser, socketConnect, socketDisconnect };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
