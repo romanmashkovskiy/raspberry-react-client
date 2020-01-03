@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { PrivateRoute } from './utils';
-import { fetchAuthUser } from './store/auth/actions';
+import { PrivateRoute, toast } from './utils';
+import { fetchAuthUser, logout } from './store/auth/actions';
 
 import Header from './components/Header';
 import HomePage from './components/HomePage'
@@ -12,13 +12,20 @@ import NotFound from './components/NotFound';
 
 import { Container } from './UI';
 
-const App = ({ user, fetchAuthUser }) => {
+const App = ({ user, fetchAuthUser, socketClient }) => {
     useEffect(() => {
         const token = localStorage.getItem('authToken');
+
         if (!user && token) {
             fetchAuthUser();
         }
     }, []);
+
+    useEffect(() => {
+        if (user) {
+            socketClient.connect();
+        }
+    }, [user]);
 
     return (
         <Router>
@@ -28,7 +35,7 @@ const App = ({ user, fetchAuthUser }) => {
                     <Route exact path='/' component={ HomePage }/>
                     <Route path='/auth' component={ Auth }/>
                     <PrivateRoute path='/dashboard' component={ Dashboard }/>
-                    <Route component={ NotFound } />
+                    <Route component={ NotFound }/>
                 </Switch>
             </Container>
         </Router>
@@ -37,6 +44,6 @@ const App = ({ user, fetchAuthUser }) => {
 
 const mapStateToProps = ({ auth: { user } }) => ({ user });
 
-const mapDispatchToProps = { fetchAuthUser };
+const mapDispatchToProps = { fetchAuthUser, logout };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

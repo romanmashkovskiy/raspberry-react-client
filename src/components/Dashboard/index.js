@@ -11,6 +11,8 @@ const Dashboard = ({ blink, clear }) => {
             <button onClick={ clear }>
                 clear led
             </button>
+            <h1>Control LED light</h1>
+            <p><input type="checkbox" id="light"/></p>
         </>
     );
 };

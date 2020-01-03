@@ -6,16 +6,17 @@ import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 import App from './App';
 import { initializeStore } from './store';
-import { ToastStyles } from './utils';
-import { setupAxiosInterceptors } from './utils';
+import { ToastStyles, setupAxiosInterceptors, SocketClient } from './utils';
 
-const store = initializeStore();
+export const socketClient = new SocketClient();
+
+const store = initializeStore(undefined, socketClient);
 
 setupAxiosInterceptors(store);
 
 ReactDOM.render(
     <Provider store={ store }>
-        <App/>
+        <App socketClient={ socketClient }/>
         <ToastStyles>
             <ToastContainer
                 position='top-right'
