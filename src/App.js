@@ -26,7 +26,7 @@ const App = ({ user, fetchAuthUser, socketConnect, getMessage }) => {
     useEffect(() => {
         const token = localStorage.getItem('authToken');
 
-        if (user && token) {
+        if (user && user.isConfirmed && token) {
             socketConnect().then(() => getMessage());
         }
     }, [user]);

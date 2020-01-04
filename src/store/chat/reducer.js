@@ -2,7 +2,7 @@ import {
     SOCKET_CONNECT_REQUEST,
     SOCKET_CONNECT_REQUEST_SUCCESS,
     SOCKET_CONNECT_REQUEST_FAILURE,
-    SOCKET_DISCONNECT,
+    SOCKET_DISCONNECT_REQUEST,
     NEW_MESSAGE
 } from './actions';
 import { SOCKET_STATUSES } from '../../utils/socketStatuses';
@@ -37,7 +37,7 @@ export default (state = initialState, action) => {
             };
         case SOCKET_CONNECT_REQUEST_FAILURE:
             return errorReducer(action);
-        case SOCKET_DISCONNECT:
+        case SOCKET_DISCONNECT_REQUEST:
             return {
                 ...initialState
             };
