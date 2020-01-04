@@ -39,6 +39,9 @@ const Header = ({ user, logout }) => {
                                 <Typography variant='h6' className={ classes.title }>
                                     <NavLink to='/dashboard' activeClassName='active'>Dashboard</NavLink>
                                 </Typography>
+                                <Typography variant='h6' className={ classes.title }>
+                                    <NavLink to='/chat' activeClassName='active'>Chat</NavLink>
+                                </Typography>
                             </>
                         ) }
                     </div>

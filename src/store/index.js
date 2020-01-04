@@ -4,12 +4,14 @@ import { requestsPromiseMiddleware } from 'redux-saga-requests';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import saga from './sagas';
 import authReducer from './auth/reducer';
+import chatReducer from './chat/reducer';
 import socketMiddleware from './middlewares/socketMiddleware';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = combineReducers({
     auth: authReducer,
+    chat: chatReducer,
 });
 
 export function initializeStore(initialState = undefined, socketClient) {

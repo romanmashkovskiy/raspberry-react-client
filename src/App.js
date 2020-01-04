@@ -3,17 +3,18 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { PrivateRoute } from './utils';
 import { fetchAuthUser } from './store/auth/actions';
-import { socketConnect, socketDisconnect } from './store/raspberry/actions';
+import { socketConnect, getMessage } from './store/chat/actions';
 
 import Header from './components/Header';
 import HomePage from './components/HomePage'
 import Auth from './components/Auth';
 import Dashboard from './components/Dashboard';
+import Chat from './components/Chat';
 import NotFound from './components/NotFound';
 
 import { Container } from './UI';
 
-const App = ({ user, fetchAuthUser, socketConnect, socketDisconnect }) => {
+const App = ({ user, fetchAuthUser, socketConnect, getMessage }) => {
     useEffect(() => {
         const token = localStorage.getItem('authToken');
 
@@ -26,7 +27,7 @@ const App = ({ user, fetchAuthUser, socketConnect, socketDisconnect }) => {
         const token = localStorage.getItem('authToken');
 
         if (user && token) {
-            socketConnect();
+            socketConnect().then(() => getMessage());
         }
     }, [user]);
 
@@ -38,6 +39,7 @@ const App = ({ user, fetchAuthUser, socketConnect, socketDisconnect }) => {
                     <Route exact path='/' component={ HomePage }/>
                     <Route path='/auth' component={ Auth }/>
                     <PrivateRoute path='/dashboard' component={ Dashboard }/>
+                    <PrivateRoute path='/chat' component={ Chat }/>
                     <Route component={ NotFound }/>
                 </Switch>
             </Container>
@@ -47,6 +49,6 @@ const App = ({ user, fetchAuthUser, socketConnect, socketDisconnect }) => {
 
 const mapStateToProps = ({ auth: { user } }) => ({ user });
 
-const mapDispatchToProps = { fetchAuthUser, socketConnect, socketDisconnect };
+const mapDispatchToProps = { fetchAuthUser, socketConnect, getMessage };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

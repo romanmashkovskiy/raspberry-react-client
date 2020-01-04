@@ -1,4 +1,4 @@
-import { socketDisconnect } from '../raspberry/actions';
+import { socketDisconnect } from '../chat/actions';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';

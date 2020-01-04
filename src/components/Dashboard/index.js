@@ -1,19 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { blink, clear } from '../../store/raspberry/actions';
+import Typography from '@material-ui/core/Typography';
 
-const Dashboard = ({ blink, clear }) => {
-    return (
-        <>
-            <h1>Control LED light</h1>
-            <p><input type='checkbox'/></p>
-            <button onClick={ clear }>
-                clear led
-            </button>
-        </>
-    );
-};
+const Dashboard = () => (
+    <Typography variant="h1" component="h2">
+        Dashboard
+    </Typography>
+);
 
-const mapDispatchToProps = { blink, clear };
-
-export default connect(null, mapDispatchToProps)(Dashboard);
+export default Dashboard;

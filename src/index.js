@@ -8,7 +8,7 @@ import App from './App';
 import { initializeStore } from './store';
 import { ToastStyles, setupAxiosInterceptors, SocketClient } from './utils';
 
-export const socketClient = new SocketClient();
+const socketClient = new SocketClient();
 
 const store = initializeStore(undefined, socketClient);
 
