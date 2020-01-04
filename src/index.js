@@ -6,11 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 import App from './App';
 import { initializeStore } from './store';
-import { ToastStyles, setupAxiosInterceptors, SocketClient } from './utils';
+import { ToastStyles, setupAxiosInterceptors } from './utils';
 
-const socketClient = new SocketClient();
-
-const store = initializeStore(undefined, socketClient);
+const store = initializeStore();
 
 setupAxiosInterceptors(store);
 

@@ -5,7 +5,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import saga from './sagas';
 import authReducer from './auth/reducer';
 import chatReducer from './chat/reducer';
-import socketMiddleware from './middlewares/socketMiddleware';
+import dynamicSocketioMiddleware from './middlewares/dynamic-socketio-middleware';
+
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -14,11 +15,11 @@ const rootReducer = combineReducers({
     chat: chatReducer,
 });
 
-export function initializeStore(initialState = undefined, socketClient) {
+export function initializeStore(initialState = undefined) {
     const middlewares = [
         requestsPromiseMiddleware({ auto: true }),
         sagaMiddleware,
-        socketMiddleware(socketClient),
+        dynamicSocketioMiddleware
     ];
 
     const store = createStore(rootReducer, initialState,

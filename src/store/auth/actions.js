@@ -1,4 +1,4 @@
-import { socketDisconnect } from '../chat/actions';
+import { unsetSocketioMiddleware } from '../middlewares/dynamic-socketio-middleware';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
@@ -27,10 +27,13 @@ export const register = (data) => ({
     },
 });
 
-export const logout = () => (dispatch) => {
+export const logout = () => {
     localStorage.removeItem('authToken');
-    dispatch(socketDisconnect());
-    dispatch({ type: LOGOUT });
+    unsetSocketioMiddleware();
+
+    return ({
+        type: LOGOUT
+    });
 };
 
 export const fetchAuthUser = () => ({

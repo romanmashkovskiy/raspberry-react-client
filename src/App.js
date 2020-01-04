@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { PrivateRoute } from './utils';
 import { fetchAuthUser } from './store/auth/actions';
-import { socketConnect, getMessage } from './store/chat/actions';
 
 import Header from './components/Header';
 import HomePage from './components/HomePage'
@@ -11,10 +10,11 @@ import Auth from './components/Auth';
 import Dashboard from './components/Dashboard';
 import Chat from './components/Chat';
 import NotFound from './components/NotFound';
+import { setSocketioMiddleware } from './store/middlewares/dynamic-socketio-middleware';
 
 import { Container } from './UI';
 
-const App = ({ user, fetchAuthUser, socketConnect, getMessage }) => {
+const App = ({ user, fetchAuthUser }) => {
     useEffect(() => {
         const token = localStorage.getItem('authToken');
 
@@ -27,7 +27,7 @@ const App = ({ user, fetchAuthUser, socketConnect, getMessage }) => {
         const token = localStorage.getItem('authToken');
 
         if (user && user.isConfirmed && token) {
-            socketConnect().then(() => getMessage());
+            setSocketioMiddleware(token);
         }
     }, [user]);
 
@@ -49,6 +49,6 @@ const App = ({ user, fetchAuthUser, socketConnect, getMessage }) => {
 
 const mapStateToProps = ({ auth: { user } }) => ({ user });
 
-const mapDispatchToProps = { fetchAuthUser, socketConnect, getMessage };
+const mapDispatchToProps = { fetchAuthUser };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
