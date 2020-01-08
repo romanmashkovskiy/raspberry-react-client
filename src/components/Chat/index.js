@@ -91,7 +91,15 @@ const Chat = ({
                     </Typography>
                     <ul>
                         { messages.map((message, index) => (
-                            <li key={ message.userId + index }>
+                            <li
+                                key={ message.userId + index }
+                                style={ {
+                                    listStyleType: 'none',
+                                    textAlign: message.userId === user.id
+                                        ? 'right'
+                                        : 'left'
+                                } }
+                            >
                                 <span>{ message.userId }:   </span>
                                 <span>{ message.content }</span>
                             </li>
@@ -110,11 +118,11 @@ const Chat = ({
                     value={ message }
                     onChange={ e => {
                         if (!isTyping) {
-                            startTyping(user.id);
-                            timeout = setTimeout(() => stopTyping(user.id), 2000);
+                            startTyping();
+                            timeout = setTimeout(stopTyping, 2000);
                         } else {
                             clearTimeout(timeout);
-                            timeout = setTimeout(() => stopTyping(user.id), 2000);
+                            timeout = setTimeout(stopTyping, 2000);
                         }
 
                         setMessage(e.target.value);
@@ -122,7 +130,7 @@ const Chat = ({
                     placeholder='Type your message here'
                 />
                 <Button onClick={ () => {
-                    sendMessage(user.id, message);
+                    sendMessage(message);
                     setMessage('');
                 } }>
                     Send
