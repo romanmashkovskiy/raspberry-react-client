@@ -22,8 +22,7 @@ export function initializeStore(initialState = undefined) {
         dynamicSocketioMiddleware
     ];
 
-    const store = createStore(rootReducer, initialState,
-        composeWithDevTools(applyMiddleware(...middlewares)));
+    const store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(...middlewares)));
     sagaMiddleware.run(saga);
 
     return store;

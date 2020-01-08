@@ -21,7 +21,7 @@ const setSocketioMiddleware = token => {
         'query': 'token=' + token
     });
 
-    dynamicMiddleware = createSocketIoMiddleware(socket, 'SERVER/');
+    dynamicMiddleware = createSocketIoMiddleware(socket, 'SERVER_');
     initiatedDynamicMiddleware = null;
 };
 

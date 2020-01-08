@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { sendMessage } from '../../store/chat/actions';
+import { sendMessage, startTyping, stopTyping } from '../../store/chat/actions';
+import Typography from '@material-ui/core/Typography';
 
 const ChatWrapper = styled.div`
     width: 100%;
@@ -9,9 +10,22 @@ const ChatWrapper = styled.div`
     position: relative;
 `;
 
-const MessagesWrapper = styled.div`
+const MainBlock = styled.div`
+    display: flex;
     width: 100%;
-    min-height: calc(100% - 60px);
+    height: calc(100% - 60px);
+`;
+
+const UsersWrapper = styled.div`
+    width: 20%;
+    min-height: 100%;
+    overflow-y: auto;
+    border-right: 1px solid black;
+`;
+
+const MessagesWrapper = styled.div`
+    width: 80%;
+    min-height: 100%;
     overflow-y: auto;
 `;
 
@@ -25,24 +39,10 @@ const InputWrapper = styled.div`
     display: flex;
 `;
 
-const StatusContainer = styled.div`
-    width: 19%; 
-    height: 100%;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-`;
-
-const StatusText = styled.p`
-    margin: 0;
-`;
-
 const Input = styled.input`
     border: 0; 
     padding: 10px; 
-    width: 70%; 
+    width: 90%; 
     height: 100%;
     margin: 0 0.5%;
 `;
@@ -55,31 +55,70 @@ const Button = styled.button`
     padding: 10px;
 `;
 
+let timeout;
 
-const Chat = ({ user, status, sendMessage, messages }) => {
+const Chat = ({
+                  user,
+                  status,
+                  sendMessage,
+                  startTyping,
+                  stopTyping,
+                  connectedUsers,
+                  messages,
+                  isTyping,
+                  typingUsers
+              }) => {
     const [message, setMessage] = useState('');
 
     return (
         <ChatWrapper>
-            <MessagesWrapper>
-                <ul>
-                    { messages.map((message, index) => (
-                        <li key={ message.userId + index }>
-                            <span>{ message.userId }   </span>
-                            <span>{ message.content }</span>
-                        </li>
-                    )) }
-                </ul>
-            </MessagesWrapper>
+            <MainBlock>
+                <UsersWrapper>
+                    <Typography variant='h6' gutterBottom align='center'>
+                        Connected users
+                    </Typography>
+                    <ul>
+                        { connectedUsers.map(user => (
+                            <li key={ user }>
+                                { user }
+                            </li>
+                        )) }
+                    </ul>
+                </UsersWrapper>
+                <MessagesWrapper>
+                    <Typography variant='h6' gutterBottom align='center'>
+                        Messages
+                    </Typography>
+                    <ul>
+                        { messages.map((message, index) => (
+                            <li key={ message.userId + index }>
+                                <span>{ message.userId }:   </span>
+                                <span>{ message.content }</span>
+                            </li>
+                        )) }
+                    </ul>
+                    { typingUsers.length > 0 && (
+                        <div>
+                            { `${ typingUsers.join(', ') } ${ typingUsers.length === 1 ? 'is typing' : 'are typing'}` }
+                        </div>
+                    ) }
+                </MessagesWrapper>
+            </MainBlock>
             <InputWrapper>
-                <StatusContainer>
-                    <StatusText>Connection status:</StatusText>
-                    <StatusText>{ status }</StatusText>
-                </StatusContainer>
                 <Input
                     type='text'
                     value={ message }
-                    onChange={ e => setMessage(e.target.value) }
+                    onChange={ e => {
+                        if (!isTyping) {
+                            startTyping(user.id);
+                            timeout = setTimeout(() => stopTyping(user.id), 2000);
+                        } else {
+                            clearTimeout(timeout);
+                            timeout = setTimeout(() => stopTyping(user.id), 2000);
+                        }
+
+                        setMessage(e.target.value);
+                    } }
                     placeholder='Type your message here'
                 />
                 <Button onClick={ () => {
@@ -93,12 +132,14 @@ const Chat = ({ user, status, sendMessage, messages }) => {
     )
 };
 
-const mapStateToProps = ({ auth: { user }, chat: { status, messages } }) => ({
+const mapStateToProps = ({ auth: { user }, chat: { connectedUsers, messages, isTyping, typingUsers } }) => ({
     user,
-    status,
-    messages
+    connectedUsers,
+    messages,
+    isTyping,
+    typingUsers
 });
 
-const mapDispatchToProps = { sendMessage };
+const mapDispatchToProps = { sendMessage, startTyping, stopTyping };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);
